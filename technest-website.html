@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechNest — Living a Sustainable Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#131b24;
+    --navy:#1b2634;
+    --navy-panel:#212f40;
+    --slate:#5b6b7c;
+    --slate-light:#8695a4;
+    --orange:#e2723a;
+    --orange-soft:#f2966a;
+    --paper:#eef1f4;
+    --paper-dim:#c3ccd4;
+    --grid-line: rgba(238,241,244,0.06);
+    --green:#8fb996;
+    --red:#d68a7a;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--navy-deep);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk',sans-serif;
+    margin:0;
+    color:var(--paper);
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .blueprint-bg{
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:36px 36px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--orange);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--orange);
+    display:inline-block;
+  }
+  .dim-line{
+    display:flex;align-items:center;gap:10px;
+    color:var(--slate-light);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.08em;
+    margin:0 0 40px 0;
+  }
+  .dim-line .tick{width:1px;height:8px;background:var(--slate-light);}
+  .dim-line .rule{flex:1;height:1px;background:var(--slate-light);opacity:.35;}
+
+  /* ===== NAV ===== */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(19,27,36,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--grid-line);
+  }
+  nav{
+    max-width:1180px;margin:0 auto;padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{width:34px;height:34px;flex-shrink:0;}
+  .brand-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.01em;}
+  .brand-name span{color:var(--orange);}
+  nav ul{list-style:none;display:flex;gap:32px;margin:0;padding:0;}
+  nav ul a{
+    font-size:14px;font-weight:500;color:var(--paper-dim);
+    transition:color .2s;
+  }
+  nav ul a:hover{color:var(--orange);}
+  .nav-toggle{display:none;background:none;border:1px solid var(--grid-line);color:var(--paper);width:38px;height:38px;border-radius:6px;font-size:18px;cursor:pointer;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:110px 0 90px;
+    overflow:hidden;
+    border-bottom:1px solid var(--grid-line);
+  }
+  .hero-inner{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(38px,5.4vw,60px);
+    line-height:1.06;
+    font-weight:700;
+  }
+  .hero h1 em{font-style:normal;color:var(--orange);}
+  .hero p.lede{
+    margin-top:22px;max-width:520px;color:var(--paper-dim);font-size:17px;
+  }
+  .hero-meta{
+    display:flex;gap:28px;margin-top:38px;flex-wrap:wrap;
+  }
+  .hero-meta div{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate-light);}
+  .hero-meta strong{display:block;color:var(--paper);font-size:15px;font-family:'Space Grotesk',sans-serif;margin-bottom:2px;}
+  .hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 22px;border-radius:3px;font-weight:600;font-size:14px;
+    font-family:'Space Grotesk',sans-serif;
+    cursor:pointer;border:1px solid transparent;transition:all .2s;
+  }
+  .btn-primary{background:var(--orange);color:#181008;}
+  .btn-primary:hover{background:var(--orange-soft);}
+  .btn-ghost{border-color:var(--grid-line);color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--slate-light);}
+  .hero-model{position:relative;height:380px;}
+
+  /* ===== SECTION SHELLS ===== */
+  section{padding:96px 0;position:relative;}
+  section.alt{background:var(--navy);border-top:1px solid var(--grid-line);border-bottom:1px solid var(--grid-line);}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head h2{font-size:clamp(28px,3.6vw,40px);font-weight:700;}
+  .section-head p{margin-top:16px;color:var(--paper-dim);font-size:16px;}
+
+  /* ===== ABOUT / VISION ===== */
+  .two-col{display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:start;}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px;}
+  .stat{border-left:1px solid var(--grid-line);padding-left:16px;}
+  .stat strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:30px;color:var(--orange);}
+  .stat span{font-size:12px;color:var(--slate-light);font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;}
+  .quote-card{
+    background:var(--navy-panel);border:1px solid var(--grid-line);border-radius:4px;
+    padding:32px;
+  }
+  .quote-card p{font-family:'Space Grotesk',sans-serif;font-size:20px;line-height:1.5;color:var(--paper);}
+  .quote-card .who{margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate-light);}
+
+  .vision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--grid-line);border:1px solid var(--grid-line);margin-top:10px;}
+  .vision-cell{background:var(--navy-deep);padding:34px 28px;}
+  .vision-cell .num{font-family:'IBM Plex Mono',monospace;color:var(--orange);font-size:12px;letter-spacing:.1em;margin-bottom:16px;display:block;}
+  .vision-cell h3{font-size:19px;margin-bottom:10px;}
+  .vision-cell p{color:var(--paper-dim);font-size:14.5px;}
+
+  /* ===== MONTH1 / OUTLOOK ===== */
+  .outlook{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:100px;}
+  .outlook-model{position:relative;height:420px;border:1px solid var(--grid-line);border-radius:4px;background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:28px 28px;background-color:var(--navy);
+  }
+  .outlook-model .cap{position:absolute;bottom:14px;left:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate-light);}
+  .breakdown-list{list-style:none;margin:26px 0 0;padding:0;}
+  .breakdown-list li{
+    display:grid;grid-template-columns:26px 1fr;gap:14px;
+    padding:16px 0;border-top:1px solid var(--grid-line);
+  }
+  .breakdown-list li:last-child{border-bottom:1px solid var(--grid-line);}
+  .breakdown-list .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);margin-top:6px;}
+  .breakdown-list h4{font-size:15px;margin-bottom:4px;}
+  .breakdown-list p{font-size:13.5px;color:var(--paper-dim);}
+
+  .status-banner{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    background:var(--navy-panel);border:1px solid var(--grid-line);border-radius:4px;
+    padding:18px 24px;margin-bottom:44px;
+  }
+  .status-banner .l{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--paper-dim);}
+  .status-banner .l strong{color:var(--paper);}
+  .status-pill{font-family:'IBM Plex Mono',monospace;font-size:12px;background:rgba(143,185,150,0.12);color:var(--green);border:1px solid rgba(143,185,150,0.3);padding:6px 12px;border-radius:20px;}
+
+  .proto-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  .proto-card{
+    background:var(--navy);border:1px solid var(--grid-line);border-radius:4px;overflow:hidden;
+    transition:border-color .2s;
+  }
+  .proto-card:hover{border-color:var(--slate);}
+  .proto-card summary{
+    list-style:none;cursor:pointer;padding:24px 26px;display:flex;flex-direction:column;gap:10px;
+  }
+  .proto-card summary::-webkit-details-marker{display:none;}
+  .proto-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .proto-sheet{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate-light);letter-spacing:.08em;}
+  .proto-check{font-size:12px;color:var(--green);font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+  .proto-name{font-size:23px;font-weight:700;margin-top:6px;}
+  .proto-tagline{color:var(--paper-dim);font-size:14.5px;margin-top:4px;}
+  .proto-owner{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--orange);margin-top:12px;}
+  .proto-expand{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate-light);margin-top:14px;display:flex;align-items:center;gap:6px;}
+  .proto-expand::after{content:"+";font-size:15px;line-height:1;color:var(--orange);}
+  details[open] .proto-expand::after{content:"–";}
+  details[open] .proto-expand{opacity:0.5}
+
+  .proto-body{padding:0 26px 28px;border-top:1px solid var(--grid-line);}
+  .proto-desc{color:var(--paper-dim);font-size:14.5px;margin:20px 0 22px;}
+  .proto-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-light);margin:22px 0 10px;}
+  .fn-list{list-style:none;padding:0;margin:0;}
+  .fn-list li{display:flex;gap:10px;font-size:14px;padding:6px 0;color:var(--paper);}
+  .fn-list .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--orange);flex-shrink:0;margin-top:2px;}
+  .usage-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;font-size:13.5px;margin-bottom:6px;}
+  .usage-grid div span{display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+  .steps-list{margin:14px 0 0;padding-left:20px;font-size:13.5px;color:var(--paper-dim);}
+  .steps-list li{margin-bottom:4px;}
+  .impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .impact-col h5{font-size:12px;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;margin-bottom:8px;}
+  .impact-col.plus h5{color:var(--green);}
+  .impact-col.minus h5{color:var(--red);}
+  .impact-col ul{margin:0;padding-left:16px;font-size:13.5px;color:var(--paper-dim);}
+  .impact-col li{margin-bottom:5px;}
+  .tech-card{background:var(--navy-panel);border:1px solid var(--grid-line);border-radius:3px;padding:16px 18px;margin-top:8px;}
+  .tech-row{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--grid-line);font-family:'IBM Plex Mono',monospace;color:var(--paper-dim);}
+  .tech-row:last-of-type{border-bottom:none;}
+  .tech-row b{color:var(--paper);font-weight:500;}
+  .tag-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  .tag-chips span{font-family:'IBM Plex Mono',monospace;font-size:11px;background:rgba(226,114,58,0.1);color:var(--orange-soft);border:1px solid rgba(226,114,58,0.25);padding:4px 10px;border-radius:20px;}
+
+  /* ===== TEAM ===== */
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .team-card{background:var(--navy);border:1px solid var(--grid-line);border-radius:4px;padding:26px 22px;text-align:left;}
+  .avatar{
+    width:52px;height:52px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;
+    margin-bottom:16px;color:#181008;
+  }
+  .team-card h4{font-size:17px;margin-bottom:3px;}
+  .team-role{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--orange);margin-bottom:12px;}
+  .team-bio{font-size:13.5px;color:var(--paper-dim);}
+
+  /* ===== CONTACT ===== */
+  .contact-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:56px;}
+  .contact-info-row{display:flex;gap:16px;padding:18px 0;border-top:1px solid var(--grid-line);}
+  .contact-info-row:last-child{border-bottom:1px solid var(--grid-line);}
+  .contact-info-row span{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate-light);width:90px;flex-shrink:0;padding-top:2px;text-transform:uppercase;letter-spacing:.05em;}
+  .contact-info-row div{font-size:14.5px;}
+  .contact-info-row a:hover{color:var(--orange);}
+  form{display:flex;flex-direction:column;gap:16px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate-light);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;display:block;}
+  input,textarea{
+    width:100%;background:var(--navy-panel);border:1px solid var(--grid-line);border-radius:3px;
+    padding:12px 14px;color:var(--paper);font-family:'Inter',sans-serif;font-size:14.5px;
+  }
+  input:focus,textarea:focus{outline:none;border-color:var(--orange);}
+  textarea{resize:vertical;min-height:110px;}
+  .form-note{font-size:12.5px;color:var(--slate-light);margin-top:4px;}
+
+  footer{border-top:1px solid var(--grid-line);padding:36px 0;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  .footer-inner .brand-name{font-size:16px;}
+  .footer-links{display:flex;gap:22px;font-size:13px;color:var(--slate-light);}
+  .footer-links a:hover{color:var(--orange);}
+
+  ::selection{background:var(--orange);color:#181008;}
+
+  @media (max-width: 920px){
+    .hero-inner,.two-col,.outlook,.contact-grid{grid-template-columns:1fr;}
+    .hero-model{order:-1;height:280px;}
+    .vision-grid,.proto-grid{grid-template-columns:1fr;}
+    .team-grid{grid-template-columns:repeat(2,1fr);}
+    .stat-row{grid-template-columns:repeat(3,1fr);}
+    nav ul{display:none;}
+    .nav-toggle{display:block;}
+  }
+  @media (max-width:520px){
+    .team-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .rot-model{animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 100"><g id="logoSmall"></g></svg>
+      <span class="brand-name">Tech<span>Nest</span></span>
+    </a>
+    <ul>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#month1">Month 1</a></li>
+      <li><a href="#team">Our Team</a></li>
+      <li><a href="#contact">Contacts</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="menu">☰</button>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero blueprint-bg">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="eyebrow">CS Engineering Project — Month 1</div>
+        <h1>We build prototypes for <em>living a sustainable life.</em></h1>
+        <p class="lede">TechNest is a student engineering team that designs, models, and tests real machines — water catchers, energy banks, waste sorters — one working prototype at a time.</p>
+        <div class="hero-meta">
+          <div><strong>8</strong>prototypes shipped</div>
+          <div><strong>8</strong>team members</div>
+          <div><strong>01</strong>month of build</div>
+        </div>
+        <div class="hero-cta">
+          <a href="#month1" class="btn btn-primary">See Month 1 prototypes</a>
+          <a href="#about" class="btn btn-ghost">About the team</a>
+        </div>
+      </div>
+      <div class="hero-model">
+        <svg id="heroSvg" viewBox="-160 -160 320 320" width="100%" height="100%"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap two-col">
+      <div>
+        <div class="eyebrow">About Us</div>
+        <h2>Eight students. One workshop. Real machines.</h2>
+        <div class="stat-row">
+          <div class="stat"><strong>M1</strong><span>CURRENT SPRINT</span></div>
+          <div class="stat"><strong>3D</strong><span>MODELED &amp; PRINTED</span></div>
+          <div class="stat"><strong>20</strong><span>PT GRADING RUBRIC</span></div>
+        </div>
+      </div>
+      <div>
+        <p style="color:var(--paper-dim);font-size:16px;">TechNest is the engineering team behind this site — a group of students who take an idea from a napkin sketch to a working 3D-modeled prototype. Every project starts the same way: pick a real problem, name it, build it, and be honest about what it does and doesn't do yet.</p>
+        <p style="color:var(--paper-dim);font-size:16px;margin-top:16px;">We work in monthly sprints. Each sprint ends with a "prototype card" — the same short, honest format you'll see below: what it is, how it works, and what it costs the world to run.</p>
+        <div class="quote-card" style="margin-top:32px;">
+          <p>"A good prototype name is short, easy to say, and hints at what the machine does."</p>
+          <div class="who">— TechNest Naming Lab, Task 8 worksheet</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION -->
+  <section id="vision" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Vision</div>
+        <h2>Machines should give more than they take.</h2>
+        <p>We believe sustainability is a design constraint, not an afterthought — so every prototype has to answer for its own materials, power draw, and repairs before it earns a name.</p>
+      </div>
+      <div class="vision-grid">
+        <div class="vision-cell">
+          <span class="num">01</span>
+          <h3>Build honestly</h3>
+          <p>Every card lists what a prototype saves <em>and</em> what it costs. No pluses without minuses.</p>
+        </div>
+        <div class="vision-cell">
+          <span class="num">02</span>
+          <h3>Design for reuse</h3>
+          <p>Water, paper, and power are treated as loops to close, not resources to spend once and discard.</p>
+        </div>
+        <div class="vision-cell">
+          <span class="num">03</span>
+          <h3>Ship something real</h3>
+          <p>A 3D file and a spec sheet aren't enough — a prototype has to actually collect, filter, sort, or store.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONTH 1 -->
+  <section id="month1">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Month 1 — Environmental Sustainability</div>
+        <h2>Eight prototypes, eight problems solved.</h2>
+        <p>This sprint asked each team member to design a machine that collects water, reuses paper, or stores energy. Below are the finished prototype integrations — expand any card for the full spec sheet.</p>
+      </div>
+
+      <!-- PROTOTYPE OUTLOOK -->
+      <div class="outlook">
+        <div class="outlook-model">
+          <svg id="outlookSvg" viewBox="-180 -180 360 360" width="100%" height="100%"></svg>
+          <div class="cap mono">FIG. 01 — ROTATING PROTOTYPE FRAME</div>
+        </div>
+        <div>
+          <div class="eyebrow">Prototype Outlook</div>
+          <h2 style="font-size:28px;">Every TechNest build shares one architecture.</h2>
+          <p style="color:var(--paper-dim);margin-top:14px;font-size:15px;">Underneath eight different jobs — catching water, pressing pulp, banking volts — the frame stays the same. Here's what's actually inside the shell.</p>
+          <ul class="breakdown-list">
+            <li><span class="dot"></span><div><h4>Shell &amp; frame</h4><p>Printed or laser-cut housing that sets the prototype's footprint and protects the internals.</p></div></li>
+            <li><span class="dot"></span><div><h4>Intake / sensor layer</h4><p>Where the machine meets the outside world — mesh, hopper, panel, or probe.</p></div></li>
+            <li><span class="dot"></span><div><h4>Process core</h4><p>The working part: a filter stack, a press, a battery cell, or a sorting arm.</p></div></li>
+            <li><span class="dot"></span><div><h4>Storage / output</h4><p>Tank, bin, cell, or hatch — where the result of the process is held or released.</p></div></li>
+            <li><span class="dot"></span><div><h4>Base mount</h4><p>Keeps the whole assembly stable and sets how it's installed on-site.</p></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PROTOTYPE INTEGRATIONS -->
+      <div class="dim-line"><span class="tick"></span><span class="rule"></span>PROTOTYPE INTEGRATIONS — 8 OF 8 COMPLETE<span class="rule"></span><span class="tick"></span></div>
+
+      <div class="status-banner">
+        <div class="l">Sprint status: <strong>Month 1 — Environmental Sustainability</strong> · based on Task 8, "Name Your Prototype" worksheet</div>
+        <div class="status-pill">✅ 8 / 8 integrated</div>
+      </div>
+
+      <div class="proto-grid" id="protoGrid"></div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Our Team</div>
+        <h2>The people behind the eight prototypes.</h2>
+        <p>Each member owns one build end-to-end — naming it, modeling it, and defending its trade-offs.</p>
+      </div>
+      <div class="team-grid" id="teamGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="eyebrow">Contacts</div>
+        <h2 style="font-size:30px;">Want a walkthrough of a build?</h2>
+        <p style="color:var(--paper-dim);margin-top:14px;font-size:15px;">Reach out for demo requests, workshop visits, or if you want to swap worksheets with us.</p>
+        <div style="margin-top:28px;">
+          <div class="contact-info-row"><span>Email</span><div><a href="mailto:hello@technest.team">hello@technest.team</a></div></div>
+          <div class="contact-info-row"><span>Location</span><div>Tashkent, Uzbekistan</div></div>
+          <div class="contact-info-row"><span>Workshop</span><div>Open Tue &amp; Thu afternoons, by request</div></div>
+          <div class="contact-info-row"><span>Social</span><div><a href="#">Instagram</a> &nbsp;·&nbsp; <a href="#">YouTube</a></div></div>
+        </div>
+      </div>
+      <div>
+        <form id="contactForm">
+          <div class="form-row">
+            <div>
+              <label for="cf-name">Name</label>
+              <input id="cf-name" type="text" placeholder="Your name" required>
+            </div>
+            <div>
+              <label for="cf-email">Email</label>
+              <input id="cf-email" type="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div>
+            <label for="cf-subject">Subject</label>
+            <input id="cf-subject" type="text" placeholder="e.g. Demo request for RainCore">
+          </div>
+          <div>
+            <label for="cf-msg">Message</label>
+            <textarea id="cf-msg" placeholder="Tell us what you'd like to see..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send message</button>
+          <p class="form-note" id="formNote">This form is a display prototype — connect it to your own backend or form service to go live.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span class="brand-name">Tech<span style="color:var(--orange);">Nest</span></span>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#vision">Vision</a>
+      <a href="#month1">Month 1</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contacts</a>
+    </div>
+    <span class="mono" style="font-size:12px;color:var(--slate-light);">© 2026 TechNest</span>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   PROTOTYPE DATA
+   Edit this array with your real Task 8 worksheet answers —
+   every card on the page is generated from it.
+   ========================================================= */
+const PROTOTYPES = [
+  {
+    member:"Anvarjon", category:"Water collection", name:"MistNest",
+    tagline:"Pulls drinking water out of morning fog and mist.",
+    description:"MistNest is a mesh-and-frame fog collector that traps airborne moisture on fine netting and channels it into a sealed catch tank. Built for humid mornings, it turns damp air into usable water with no pump, no filter to clog, and no electricity — just wind and mesh.",
+    functions:[
+      "Collects up to 4 litres of condensed water per foggy morning",
+      "Filters debris through a 2-layer mesh before storage",
+      "Alerts the owner via a float indicator once the tank passes 80% full"
+    ],
+    usage:{who:"Households in humid climates", where:"Rooftops, balconies, courtyards", often:"Emptied every 1–2 days in fog season",
+      steps:["Angle the mesh frame toward the morning wind","Let mist collect for 3–6 hours","Drain the catch tank into a storage jug"]},
+    pluses:["Needs zero electricity to run","Cuts trucked-in water use during fog season"],
+    minuses:["Only works in humid, foggy conditions","Mesh needs replacing roughly every 8 months"],
+    tech:{materials:"PP mesh, aluminium frame, PET tank", power:"None (passive)", size:"60 × 40 × 15 cm", cost:"Low",
+      file:"mistnest_v3.stl", software:"Fusion 360", tags:["fog harvesting","passive water","low-cost"]}
+  },
+  {
+    member:"Soliha", category:"Paper reuse", name:"PulpForge",
+    tagline:"Turns shredded scrap paper into reusable notebook sheets.",
+    description:"PulpForge shreds waste paper, mixes it with water into pulp, and presses it flat between two mesh screens until it dries into a fresh sheet. It gives classroom scrap paper a second life as sketchbook or notebook pages instead of sending it straight to the bin.",
+    functions:[
+      "Shreds up to 20 sheets of scrap paper per batch",
+      "Presses pulp into a new sheet in a 15-minute cycle",
+      "Measures sheet thickness with a hand-crank gauge before drying"
+    ],
+    usage:{who:"Students and classrooms", where:"Art rooms, home desks, makerspaces", often:"Run once a week to clear a paper bin",
+      steps:["Feed dry scrap paper into the shredder","Soak and press the pulp between mesh screens","Peel and air-dry the new sheet overnight"]},
+    pluses:["Diverts a full bin of paper waste weekly","Costs nothing per sheet after setup"],
+    minuses:["New sheets are rougher than store-bought paper","Pressing and drying takes a full day"],
+    tech:{materials:"Recycled steel frame, nylon mesh, hand-crank shredder", power:"Manual (hand-crank)", size:"45 × 30 × 20 cm", cost:"Low",
+      file:"pulpforge_body.stl", software:"Tinkercad", tags:["paper reuse","upcycling","manual press"]}
+  },
+  {
+    member:"Nurulloh", category:"Battery / energy storage", name:"VoltBank",
+    tagline:"Stores spare solar power for cloudy days and blackouts.",
+    description:"VoltBank is a modular battery pack that stores energy from a small solar panel through the day and releases it through USB and DC ports at night. Stackable cells let a household grow their storage over time, with a simple display showing exactly how much charge is left.",
+    functions:[
+      "Stores up to 40 watt-hours per battery module",
+      "Charges from a 10W solar panel in roughly 5 hours",
+      "Measures remaining charge on a 4-LED display"
+    ],
+    usage:{who:"Households with unreliable grid power", where:"Kitchens, study desks, off-grid cabins", often:"Charged daily, drawn down each evening",
+      steps:["Connect the solar panel and let it charge through the day","Check the LED display for stored charge","Plug lamps or devices into the USB/DC ports at night"]},
+    pluses:["Keeps lights and phones running through outages","Cuts reliance on disposable batteries"],
+    minuses:["Needs direct sun to recharge fully","Cells wear out after roughly 500 cycles"],
+    tech:{materials:"18650 cells, ABS casing, aluminium heat sink", power:"10W solar panel", size:"18 × 12 × 6 cm", cost:"Mid",
+      file:"voltbank_module.stl", software:"Fusion 360", tags:["solar storage","off-grid","modular battery"]}
+  },
+  {
+    member:"Nuriddin", category:"Water collection", name:"RainCore",
+    tagline:"Catches rooftop rain and filters it clean for daily use.",
+    description:"RainCore channels rooftop runoff through a leaf screen and a 3-stage sand-and-charcoal filter into a covered storage barrel. A tap at the base makes the collected water ready for watering plants, washing, or, with an added treatment step, drinking.",
+    functions:[
+      "Collects up to 200 litres per heavy rainfall",
+      "Filters runoff through 3 layers of sand, gravel, and charcoal",
+      "Measures water level with a floating gauge visible from outside"
+    ],
+    usage:{who:"Households and school gardens", where:"Under a roof downspout", often:"Fills automatically during rain, drained as needed",
+      steps:["Direct the downspout into the leaf screen","Let water pass through the filter layers into the barrel","Open the base tap to draw water out"]},
+    pluses:["Cuts tap water use for gardening significantly","Reduces runoff flooding near the building"],
+    minuses:["Filter layers need cleaning every 2 months","Can overflow in very heavy storms"],
+    tech:{materials:"HDPE barrel, sand, gravel, activated charcoal", power:"None (gravity-fed)", size:"50 × 50 × 90 cm", cost:"Mid",
+      file:"raincore_barrel.stl", software:"SolidWorks", tags:["rainwater","filtration","gravity-fed"]}
+  },
+  {
+    member:"Farrux", category:"Other — waste sorting", name:"SortLoop",
+    tagline:"Sorts bottles, paper, and food waste as you drop them in.",
+    description:"SortLoop is a three-bin station with a tilting tray and simple weight-and-shape checks that guide waste into the right bin — plastic, paper, or organic. A light on each bin confirms the sort, turning cleanup into a quick habit instead of a guessing game.",
+    functions:[
+      "Sorts items into 3 categories using weight and shape checks",
+      "Presses plastic bottles flat to save about 30% of bin space",
+      "Alerts with a light when a bin passes 90% full"
+    ],
+    usage:{who:"Classrooms and shared kitchens", where:"Near cafeterias, hallways, break rooms", often:"Used daily, checked at day's end",
+      steps:["Drop the item onto the tilting tray","Wait for the sensor light to show the sorted bin","Empty a bin once its full-light turns on"]},
+    pluses:["Increases correct recycling sort rates noticeably","Reduces contaminated recycling loads"],
+    minuses:["Sensor occasionally misreads oddly shaped items","Needs battery replacement every few months"],
+    tech:{materials:"PLA housing, IR sensors, servo motor", power:"4× AA batteries", size:"70 × 40 × 40 cm", cost:"Mid",
+      file:"sortloop_bin.stl", software:"Fusion 360", tags:["waste sorting","recycling","sensors"]}
+  },
+  {
+    member:"Ibrohim", category:"Battery / energy storage", name:"SunCatcher",
+    tagline:"A fold-out solar station that charges devices in the courtyard.",
+    description:"SunCatcher is a fold-out panel stand that tilts to track the sun and feeds a built-in power bank through the day. Folded flat it fits in a backpack; unfolded, it becomes a shared charging point for phones, lamps, or small fans wherever there's no outlet nearby.",
+    functions:[
+      "Charges a 20,000mAh power bank in about 4 hours of sun",
+      "Tilts across 5 angle positions to track the sun",
+      "Powers up to 4 USB devices at once"
+    ],
+    usage:{who:"Students and outdoor event organizers", where:"Courtyards, camps, community events", often:"Set up whenever devices need charging outdoors",
+      steps:["Unfold the panel and tilt it toward the sun","Let the power bank charge through the day","Plug devices into the USB ports as needed"]},
+    pluses:["Provides charging without a wall outlet","Folds flat for easy carrying"],
+    minuses:["Charging slows sharply on cloudy days","Power bank adds noticeable weight when folded"],
+    tech:{materials:"Aluminium hinges, PLA housing, monocrystalline panel", power:"10W solar panel", size:"30 × 20 × 3 cm (folded)", cost:"Mid",
+      file:"suncatcher_frame.stl", software:"Onshape", tags:["solar charging","portable","power bank"]}
+  },
+  {
+    member:"Kamron", category:"Paper reuse", name:"LeafPress",
+    tagline:"Presses waste paper into plantable seed pots.",
+    description:"LeafPress soaks shredded scrap paper into pulp and molds it around a seed-and-soil mix inside a hand press, producing small biodegradable pots. Instead of throwing pots away after planting, the whole pot goes into the ground and breaks down as the seedling grows.",
+    functions:[
+      "Presses 6 seed pots per pulp batch",
+      "Shreds up to 15 sheets of paper into pulp per session",
+      "Measures pot wall thickness with a built-in press gauge"
+    ],
+    usage:{who:"School gardening clubs", where:"Garden sheds, classrooms", often:"Run once every planting cycle",
+      steps:["Shred and soak scrap paper into pulp","Press the pulp into the pot mold with soil and seed","Let the pot dry for a day before planting it directly"]},
+    pluses:["Removes plastic pots from planting entirely","Reuses paper that would otherwise be thrown out"],
+    minuses:["Pots take a full day to dry before use","Mold produces only 6 pots per batch"],
+    tech:{materials:"Recycled paper pulp, steel press mold, wood handle", power:"Manual", size:"25 × 15 × 15 cm", cost:"Low",
+      file:"leafpress_mold.stl", software:"Tinkercad", tags:["paper reuse","biodegradable","gardening"]}
+  },
+  {
+    member:"Gulchexra", category:"Other — composting", name:"CompostNest",
+    tagline:"Turns kitchen scraps into garden-ready compost in weeks.",
+    description:"CompostNest is a rotating drum bin with a built-in moisture sensor that keeps kitchen scraps aerated and at the right dampness to break down quickly. A side hatch collects finished compost, cutting food waste headed to landfill and feeding the school garden instead.",
+    functions:[
+      "Turns compost with an 8-crank rotation cycle",
+      "Measures moisture with a built-in probe every batch",
+      "Alerts with a colour tab when compost is ready to harvest"
+    ],
+    usage:{who:"Cafeteria staff and gardening clubs", where:"Kitchen gardens, cafeteria back lots", often:"Fed daily, turned every 2 days",
+      steps:["Add food scraps through the top hatch","Turn the crank every couple of days to mix and aerate","Collect finished compost from the side hatch after 3–4 weeks"]},
+    pluses:["Diverts kitchen food waste from landfill weekly","Produces free fertilizer for the garden"],
+    minuses:["Needs regular turning or it smells","Slows down significantly in cold weather"],
+    tech:{materials:"Recycled plastic drum, steel crank axle, moisture probe", power:"Manual + 1 coin cell (sensor)", size:"55 × 45 × 45 cm", cost:"Mid",
+      file:"compostnest_drum.stl", software:"Fusion 360", tags:["composting","food waste","garden"]}
+  }
+];
+
+/* ---------- render prototype cards ---------- */
+const grid = document.getElementById('protoGrid');
+PROTOTYPES.forEach((p,i)=>{
+  const n = String(i+1).padStart(2,'0');
+  const el = document.createElement('details');
+  el.className = 'proto-card';
+  el.innerHTML = `
+    <summary>
+      <div class="proto-top">
+        <span class="proto-sheet mono">INTEGRATION ${n} — ${p.category.toUpperCase()}</span>
+        <span class="proto-check">✅ COMPLETE</span>
+      </div>
+      <div class="proto-name">${p.name}</div>
+      <div class="proto-tagline">${p.tagline}</div>
+      <div class="proto-owner mono">BUILT BY ${p.member.toUpperCase()}</div>
+      <div class="proto-expand">View full spec sheet</div>
+    </summary>
+    <div class="proto-body">
+      <p class="proto-desc">${p.description}</p>
+
+      <div class="proto-sub">Functions</div>
+      <ul class="fn-list">
+        ${p.functions.map((f,idx)=>`<li><span class="tag">F${idx+1}</span>${f}</li>`).join('')}
+      </ul>
+
+      <div class="proto-sub">Usage</div>
+      <div class="usage-grid">
+        <div><span>Used by</span>${p.usage.who}</div>
+        <div><span>Used where</span>${p.usage.where}</div>
+        <div style="grid-column:1/-1;"><span>Used how often</span>${p.usage.often}</div>
+      </div>
+      <ol class="steps-list">${p.usage.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+
+      <div class="proto-sub">Sustainability impact</div>
+      <div class="impact-grid">
+        <div class="impact-col plus"><h5 class="mono">+ PLUSES</h5><ul>${p.pluses.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        <div class="impact-col minus"><h5 class="mono">− MINUSES</h5><ul>${p.minuses.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      </div>
+
+      <div class="proto-sub">Tech card</div>
+      <div class="tech-card">
+        <div class="tech-row"><span>Main materials</span><b>${p.tech.materials}</b></div>
+        <div class="tech-row"><span>Power source</span><b>${p.tech.power}</b></div>
+        <div class="tech-row"><span>Approx. size</span><b>${p.tech.size}</b></div>
+        <div class="tech-row"><span>Cost</span><b>${p.tech.cost}</b></div>
+        <div class="tech-row"><span>3D file</span><b>${p.tech.file}</b></div>
+        <div class="tech-row"><span>Software used</span><b>${p.tech.software}</b></div>
+      </div>
+      <div class="tag-chips">${p.tech.tags.map(t=>`<span>#${t}</span>`).join('')}</div>
+    </div>
+  `;
+  grid.appendChild(el);
+});
+
+/* ---------- render team ---------- */
+const teamGrid = document.getElementById('teamGrid');
+const roleMap = {
+  "Water collection":"Water Systems",
+  "Paper reuse":"Materials & Reuse",
+  "Battery / energy storage":"Power Systems",
+  "Other — waste sorting":"Waste Systems",
+  "Other — composting":"Waste Systems"
+};
+PROTOTYPES.forEach((p,i)=>{
+  const initials = p.member.slice(0,2).toUpperCase();
+  const bg = i % 2 === 0 ? 'var(--orange)' : 'var(--slate-light)';
+  const card = document.createElement('div');
+  card.className = 'team-card';
+  card.innerHTML = `
+    <div class="avatar" style="background:${bg}">${initials}</div>
+    <h4>${p.member}</h4>
+    <div class="team-role mono">${roleMap[p.category] || 'Prototype Lead'}</div>
+    <p class="team-bio">Designed &amp; built <strong style="color:var(--paper)">${p.name}</strong> — ${p.tagline.toLowerCase()}</p>
+  `;
+  teamGrid.appendChild(card);
+});
+
+/* ---------- contact form (display only) ---------- */
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('formNote').textContent = "Thanks — this demo form doesn't send yet, but your message was validated client-side.";
+});
+
+/* =========================================================
+   ROTATING WIREFRAME MODEL (pure SVG, computed per frame)
+   ========================================================= */
+function buildWireframe(svgEl, {rotate=true, speed=0.006, scale=1} = {}){
+  const NS = "http://www.w3.org/2000/svg";
+  const nodes = {
+    T:[0,-90,0], L:[-70,-30,55], R:[70,-30,55], B:[0,-30,-75],
+    C:[0,15,0], F:[0,65,0], G:[0,125,0],
+    Fl:[-70,85,55], Fr:[70,85,55], Bb:[0,85,-75],
+    La:[-100,-45,80], Ra:[100,-45,80], Ba:[0,-45,-110]
+  };
+  const edgesOrange = [['T','L'],['T','R'],['L','C'],['R','C'],['C','F'],['F','G'],['L','La'],['R','Ra'],['B','Ba']];
+  const edgesGray = [['T','B'],['B','L'],['B','R'],['L','Fl'],['R','Fr'],['B','Bb'],['Fl','Fr'],['Fr','Bb'],['Bb','Fl'],['Fl','F'],['Fr','F'],['Bb','F']];
+  const dotsOrange = ['L','R','B'];
+  const dotsGray = ['T','C','F'];
+
+  const lineEls = {};
+  const dotEls = {};
+
+  function makeLine(color, w){
+    const l = document.createElementNS(NS,'line');
+    l.setAttribute('stroke', color);
+    l.setAttribute('stroke-width', w);
+    l.setAttribute('stroke-linecap','round');
+    svgEl.appendChild(l);
+    return l;
+  }
+  function makeDot(color, r){
+    const c = document.createElementNS(NS,'circle');
+    c.setAttribute('r', r);
+    c.setAttribute('fill', color);
+    svgEl.appendChild(c);
+    return c;
+  }
+
+  edgesGray.forEach((e,i)=> lineEls['g'+i] = {el: makeLine('#5b6b7c', 1.6*scale), pair:e});
+  edgesOrange.forEach((e,i)=> lineEls['o'+i] = {el: makeLine('#e2723a', 2.4*scale), pair:e});
+  dotsGray.forEach(k => dotEls[k] = {el: makeDot('#8695a4', 3.2*scale), key:k});
+  dotsOrange.forEach(k => dotEls[k] = {el: makeDot('#e2723a', 6.5*scale), key:k});
+
+  let angle = 0;
+  function project(p){
+    const [x,y,z] = p;
+    const cosA = Math.cos(angle), sinA = Math.sin(angle);
+    const x2 = x*cosA + z*sinA;
+    const z2 = -x*sinA + z*cosA;
+    const persp = 340/(340+z2);
+    return {x: x2*persp*scale, y: y*persp*scale, z: z2, op: 0.55 + 0.45*((z2+120)/240)};
+  }
+
+  function frame(){
+    const proj = {};
+    Object.keys(nodes).forEach(k => proj[k] = project(nodes[k]));
+
+    Object.values(lineEls).forEach(({el, pair})=>{
+      const a = proj[pair[0]], b = proj[pair[1]];
+      el.setAttribute('x1', a.x); el.setAttribute('y1', a.y);
+      el.setAttribute('x2', b.x); el.setAttribute('y2', b.y);
+      el.setAttribute('opacity', ((a.op+b.op)/2).toFixed(2));
+    });
+    Object.values(dotEls).forEach(({el,key})=>{
+      const p = proj[key];
+      el.setAttribute('cx', p.x); el.setAttribute('cy', p.y);
+      el.setAttribute('opacity', p.op.toFixed(2));
+    });
+
+    if (rotate) angle += speed;
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+buildWireframe(document.getElementById('heroSvg'), {rotate:!reduceMotion, speed:0.006, scale:1});
+buildWireframe(document.getElementById('outlookSvg'), {rotate:!reduceMotion, speed:0.008, scale:1.05});
+
+/* small static header logo mark */
+(function(){
+  const NS = "http://www.w3.org/2000/svg";
+  const g = document.getElementById('logoSmall');
+  const pts = { T:[50,14], L:[18,40], R:[82,40], C:[50,52], F:[50,74] };
+  function line(a,b,color,w){
+    const l = document.createElementNS(NS,'line');
+    l.setAttribute('x1',pts[a][0]); l.setAttribute('y1',pts[a][1]);
+    l.setAttribute('x2',pts[b][0]); l.setAttribute('y2',pts[b][1]);
+    l.setAttribute('stroke',color); l.setAttribute('stroke-width',w); l.setAttribute('stroke-linecap','round');
+    g.appendChild(l);
+  }
+  function dot(k,color,r){
+    const c = document.createElementNS(NS,'circle');
+    c.setAttribute('cx',pts[k][0]); c.setAttribute('cy',pts[k][1]); c.setAttribute('r',r); c.setAttribute('fill',color);
+    g.appendChild(c);
+  }
+  line('T','L','#5b6b7c',3); line('T','R','#5b6b7c',3);
+  line('L','C','#e2723a',3.5); line('R','C','#e2723a',3.5);
+  line('C','F','#e2723a',3.5);
+  dot('T','#8695a4',3); dot('C','#8695a4',3);
+  dot('L','#e2723a',6); dot('R','#e2723a',6);
+})();
+</script>
+</body>
+</html>
